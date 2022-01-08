@@ -25,4 +25,6 @@ class SignTest {
         boolean result = sign.isValidEmail(email);
         assertThat(result).isTrue();
     }
+
+
 }
