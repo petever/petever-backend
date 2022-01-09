@@ -1,5 +1,7 @@
-package com.example.petever.domain.account;
+package com.example.petever.account;
 
+import com.example.petever.account.domain.Email;
+import com.example.petever.account.service.MailService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +16,8 @@ class EmailTest {
     @Test
     @DisplayName("이메일은 빈값이나 널이 들어오면 안된다")
     void case1() {
-        String email = null;
-        Email sign = new Email();
-        boolean result = sign.isEmpty(email);
+        String email = "";
+        boolean result = Email.isEmpty(email);
         assertThat(result).isTrue();
     }
 
@@ -24,8 +25,7 @@ class EmailTest {
     @DisplayName("이메일 형식에 맞지 않는 값은 들어오면 안된다.")
     void case2() {
         String email = "rumor1993@flow.team";
-        Email sign = new Email();
-        boolean result = sign.isValid(email);
+        boolean result = Email.isValid(email);
         assertThat(result).isTrue();
     }
 
