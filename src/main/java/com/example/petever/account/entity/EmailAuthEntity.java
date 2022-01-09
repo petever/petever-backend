@@ -10,10 +10,10 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class EmailAuthEntity {
 
     @Id
     private String email;
-    private String password;
-    private String name;
+    private String code;
+    private boolean isUse;
 }

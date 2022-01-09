@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UserDto {
+public class MailAuthDto {
     private String email;
-    private String password;
-    private String name;
     private String code;
 }
