@@ -6,9 +6,12 @@ import com.example.petever.account.domain.Nickname;
 import com.example.petever.account.domain.Password;
 import com.example.petever.account.dto.UserDto;
 import com.example.petever.account.entity.EmailAuthEntity;
+import com.example.petever.account.entity.UserEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import com.example.petever.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +28,10 @@ public class AccountService {
 
         EmailAuthEntity emailAuthEntity = emailAuthRepository.findById(userDto.getEmail()).get();
         if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
+
+        ModelMapper modelMapper = new ModelMapper();
+        UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+        accountRepository.save(userEntity);
         return "OK";
     }
 }

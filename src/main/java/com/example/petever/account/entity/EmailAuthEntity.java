@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "EmaulAuth")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EmailAuthEntity {
-
     @Id
     private String email;
     private String code;

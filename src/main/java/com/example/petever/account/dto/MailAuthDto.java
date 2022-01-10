@@ -8,4 +8,11 @@ import lombok.RequiredArgsConstructor;
 public class MailAuthDto {
     private String email;
     private String code;
+    private boolean isUse;
+
+    public MailAuthDto(String email, String code, boolean isUse) {
+        this.email = email;
+        this.code = code;
+        this.isUse = isUse;
+    }
 }
