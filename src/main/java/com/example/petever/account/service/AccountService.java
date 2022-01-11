@@ -11,7 +11,6 @@ import com.example.petever.account.repository.EmailAuthRepository;
 import com.example.petever.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +19,7 @@ public class AccountService {
 
     private final UserRepository accountRepository;
     private final EmailAuthRepository emailAuthRepository;
+    private final ModelMapper modelMapper;
 
     public String signIn(UserDto userDto) {
         if (!Email.isValid(userDto.getEmail())) return "이메일을 확인해주세요";
@@ -29,7 +29,7 @@ public class AccountService {
         EmailAuthEntity emailAuthEntity = emailAuthRepository.findById(userDto.getEmail()).get();
         if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
 
-        ModelMapper modelMapper = new ModelMapper();
+
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         accountRepository.save(userEntity);
         return "OK";

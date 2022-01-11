@@ -21,6 +21,7 @@ public class MailService {
 
     private final JavaMailSender javaMailSender;
     private final EmailAuthRepository emailAuthRepository;
+    private final ModelMapper modelMapper;
 
     public void sendMail(String email) {
         List<String> toUserList = new ArrayList<>();
@@ -34,11 +35,19 @@ public class MailService {
         simpleMailMessage.setSubject("Petever 회원가입 인증 메일입니다");
         simpleMailMessage.setText("Verification code: " + authNo);
         javaMailSender.send(simpleMailMessage);
+
         MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), true);
-        System.out.println("mailAuthDto = " + mailAuthDto.getEmail());
-        ModelMapper modelMapper = new ModelMapper();
+
+        System.out.println("modelMapper = " + mailAuthDto.getEmail());
+        System.out.println("modelMapper = " + mailAuthDto.getCode());
+        System.out.println("modelMapper = " + mailAuthDto.isUse());
+
         EmailAuthEntity emailAuthEntity = modelMapper.map(mailAuthDto, EmailAuthEntity.class);
-        System.out.println("emailAuthEntity = " + emailAuthEntity.getEmail());
+
+        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.getEmail());
+        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.getCode());
+        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.isUse());
+
         emailAuthRepository.save(emailAuthEntity);
     }
 }
