@@ -37,17 +37,7 @@ public class MailService {
         javaMailSender.send(simpleMailMessage);
 
         MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), true);
-
-        System.out.println("modelMapper = " + mailAuthDto.getEmail());
-        System.out.println("modelMapper = " + mailAuthDto.getCode());
-        System.out.println("modelMapper = " + mailAuthDto.isUse());
-
         EmailAuthEntity emailAuthEntity = modelMapper.map(mailAuthDto, EmailAuthEntity.class);
-
-        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.getEmail());
-        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.getCode());
-        System.out.println("emailAuthEntity.getEmail() = " + emailAuthEntity.isUse());
-
         emailAuthRepository.save(emailAuthEntity);
     }
 }
