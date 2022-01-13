@@ -39,6 +39,18 @@ public class AccountController {
         return "이메일 발송";
     }
 
+    @PostMapping("/login")
+    public void logIn(@RequestBody UserDto userDto){
+        String result = accountService.logIn(userDto);
+        if(result.equals("OK")){
+            System.out.println("로그인 성공");
+        }else{
+            System.out.println("아이디와 비밀번호를 확인해주세요.");
+        }
+    }
+
+
+
 
 
 

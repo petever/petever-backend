@@ -10,4 +10,9 @@ public class UserDto {
     private String password;
     private String name;
     private String code;
+
+    public UserDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
