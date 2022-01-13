@@ -34,4 +34,14 @@ public class AccountService {
         accountRepository.save(userEntity);
         return "OK";
     }
+
+
+    public String logIn(UserDto userDto){
+        long result = accountRepository.countByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
+        if (result != 1) return "FAIL";
+        return "OK";
+
+
+    }
+
 }
