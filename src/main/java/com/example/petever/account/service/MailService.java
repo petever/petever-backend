@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class MailService {
     private final EmailAuthRepository emailAuthRepository;
     private final ModelMapper modelMapper;
 
-    public void sendMail(String email) {
+    public void sendMailCode(String email) {
         List<String> toUserList = new ArrayList<>();
         toUserList.add(email);
 
@@ -36,8 +37,19 @@ public class MailService {
         simpleMailMessage.setText("Verification code: " + authNo);
         javaMailSender.send(simpleMailMessage);
 
-        MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), true);
+        MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), false);
         EmailAuthEntity emailAuthEntity = modelMapper.map(mailAuthDto, EmailAuthEntity.class);
         emailAuthRepository.save(emailAuthEntity);
+    }
+
+    public Boolean checkMailCode(String email, String code) {
+        EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
+        if (LocalDateTime.now().isBefore(emailAuth.getCreatedDate().plusMinutes(10))) emailAuth.changeMailUse(false);
+        return emailAuth.isUse();
+    }
+
+    public void authenticationMailCode(String email, String code) {
+        EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
+        if (emailAuth != null) emailAuth.changeMailUse(true);
     }
 }
