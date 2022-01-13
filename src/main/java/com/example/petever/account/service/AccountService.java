@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -26,12 +28,18 @@ public class AccountService {
         if (!Password.isValid(userDto.getPassword())) return "비밀번호를 확인해주세요";
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";
 
-        EmailAuthEntity emailAuthEntity = emailAuthRepository.findById(userDto.getEmail()).get();
+        EmailAuthEntity emailAuthEntity = emailAuthRepository.findByEmailAndCode(userDto.getEmail(), userDto.getCode());
         if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
 
 
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         accountRepository.save(userEntity);
         return "OK";
+    }
+
+    public Boolean checkMail(String email) {
+        UserEntity userEntity = accountRepository.findById(email).get();
+        if ("".equals(userEntity.getEmail())) return true;
+        return false;
     }
 }

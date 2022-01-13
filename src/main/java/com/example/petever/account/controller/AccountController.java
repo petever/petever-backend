@@ -20,26 +20,28 @@ public class AccountController {
     private final EmailAuthRepository emailAuthRepository;
 
     @PostMapping("/")
-    public String signIn(@RequestBody UserDto userDto) {
+    public String signUp(@RequestBody UserDto userDto) {
         return accountService.signIn(userDto);
     }
 
-    // TODO: 엔티티를 그대로 사용하지말고 DTO로 변환하도록 변경
-    // TODO: 어레처리 필요
-    @GetMapping("/{email}/mail")
-    public String getMailCode(@PathVariable String email) {
-        EmailAuthEntity emailAuthEntity = emailAuthRepository.findById(email).orElse(null);
-        if (emailAuthEntity == null) return "이메일이 없습니다";       //throw new IllegalArgumentException();
-        return emailAuthEntity.getCode();
+    @GetMapping("/mail/check")
+    public Boolean checkMail(@RequestParam String email) {
+        return accountService.checkMail(email);
     }
 
-    @PostMapping("/{email}/mail")
-    public String sendMailCode(@PathVariable String email) {
-        mailService.sendMail(email);
+    @PostMapping("/mail")
+    public String sendMailCode(@RequestParam String email) {
+        mailService.sendMailCode(email);
         return "이메일 발송";
     }
 
+    @GetMapping("/mail/auth")
+    public Boolean checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
+        return mailService.checkMailCode(email, code);
+    }
 
-
-
+    @PostMapping("/mail/auth")
+    public void authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
+        mailService.authenticationMailCode(email, code);
+    }
 }
