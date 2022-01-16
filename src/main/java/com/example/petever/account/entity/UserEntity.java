@@ -1,5 +1,6 @@
 package com.example.petever.account.entity;
 
+import io.swagger.models.auth.In;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,17 +15,17 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "User")
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Integer id;
     private String email;
     private String password;
     private String name;
     private String code;
+
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate

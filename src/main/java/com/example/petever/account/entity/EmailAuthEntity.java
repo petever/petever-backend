@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "EmaulAuth")
+@Table(name = "email_auth")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EmailAuthEntity {

@@ -36,6 +36,7 @@ public class MailService {
         simpleMailMessage.setTo(toUserList.toArray(new String[toUserSize]));
         simpleMailMessage.setSubject("Petever 회원가입 인증 메일입니다");
         simpleMailMessage.setText("Verification code: " + authNo);
+        System.out.println("authNo = " + authNo);
         javaMailSender.send(simpleMailMessage);
 
         MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), false);
@@ -51,6 +52,7 @@ public class MailService {
 
     public void authenticationMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
+        System.out.println("emailAuth = " + emailAuth);
         if (emailAuth != null) emailAuth.changeMailUse(true);
     }
 }

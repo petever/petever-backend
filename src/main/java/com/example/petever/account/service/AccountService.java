@@ -33,6 +33,7 @@ public class AccountService {
         if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
 
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+        System.out.println("userEntity = " + userEntity);
         accountRepository.save(userEntity);
         return "OK";
     }
