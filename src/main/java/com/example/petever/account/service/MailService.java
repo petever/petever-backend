@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class MailService {
         return emailAuth.isUse();
     }
 
-    public void authenticationMailCode(String email, String code) {
+    public ResponseEntity authenticationMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
         if (emailAuth != null) emailAuth.changeMailUse(true);
     }

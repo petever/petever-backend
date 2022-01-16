@@ -19,7 +19,7 @@ public class AccountController {
     private final MailService mailService;
     private final EmailAuthRepository emailAuthRepository;
 
-    @PostMapping("/")
+    @PostMapping
     public String signUp(@RequestBody UserDto userDto) {
         return accountService.signIn(userDto);
     }

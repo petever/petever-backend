@@ -29,8 +29,8 @@ public class AccountService {
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";
 
         EmailAuthEntity emailAuthEntity = emailAuthRepository.findByEmailAndCode(userDto.getEmail(), userDto.getCode());
-        if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
 
+        if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) return "이메일 인증코드를 확인하세요";
 
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         accountRepository.save(userEntity);
