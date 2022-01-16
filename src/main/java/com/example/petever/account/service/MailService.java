@@ -49,7 +49,7 @@ public class MailService {
         return emailAuth.isUse();
     }
 
-    public ResponseEntity authenticationMailCode(String email, String code) {
+    public void authenticationMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
         if (emailAuth != null) emailAuth.changeMailUse(true);
     }
