@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/signup")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AccountController {
 
     private final AccountService accountService;
