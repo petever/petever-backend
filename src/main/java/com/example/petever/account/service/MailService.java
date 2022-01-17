@@ -41,6 +41,7 @@ public class MailService {
 
     public Boolean checkMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code);
+        if (emailAuth == null) throw new NullPointerException("해당 메일과 코드가 인증되지 않았습니다.");
         if (LocalDateTime.now().isBefore(emailAuth.getCreatedDate().plusMinutes(10))) emailAuth.changeMailUse(false);
         return emailAuth.isUse();
     }
