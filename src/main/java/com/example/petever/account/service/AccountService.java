@@ -28,8 +28,10 @@ public class AccountService {
         if (!Password.isValid(userDto.getPassword())) return "비밀번호를 확인해주세요";
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";
 
-        EmailAuthEntity emailAuthEntity = emailAuthRepository.findByEmailAndCode(userDto.getEmail(), userDto.getCode());
-        if (emailAuthEntity == null && !Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) throw new IllegalStateException("이메일 인증코드를 확인하세요");
+        EmailAuthEntity emailAuthEntity = emailAuthRepository.findByEmailAndCode(userDto.getEmail(), userDto.getCode())
+                .filter(e -> e != null)
+                .orElseThrow(() -> new IllegalStateException("이메일 인증코드를 확인하세요"));
+        if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) throw new IllegalStateException("이메일 인증코드가 맞지 않습니다.");
 
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         accountRepository.save(userEntity);
@@ -37,8 +39,10 @@ public class AccountService {
     }
 
     public Boolean checkMail(String email) {
-        UserEntity userEntity = accountRepository.findByEmail(email);
-        if (userEntity == null) throw new IllegalStateException("이메일을 확인하세요");
+        UserEntity userEntity = accountRepository.findByEmail(email)
+                .filter(user -> user != null)
+                .orElseThrow(() -> new IllegalStateException("이메일을 확인하세요"));
+
         if ("".equals(userEntity.getEmail())) return true;
         return false;
     }
