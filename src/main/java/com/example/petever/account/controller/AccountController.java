@@ -1,13 +1,12 @@
 package com.example.petever.account.controller;
 
-import com.example.petever.account.dto.MailAuthDto;
 import com.example.petever.account.dto.UserDto;
 import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import com.example.petever.account.service.AccountService;
 import com.example.petever.account.service.MailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,9 +29,9 @@ public class AccountController {
     }
 
     @PostMapping("/mail")
-    public String sendMailCode(@RequestParam String email) {
-        mailService.sendMailCode(email);
-        return "이메일 발송";
+    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) {
+        EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
+        return ResponseEntity.ok().body(emailAuthEntity);
     }
 
     @GetMapping("/mail/auth")
