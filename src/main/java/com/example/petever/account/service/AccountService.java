@@ -37,7 +37,7 @@ public class AccountService {
     }
 
     public Boolean checkMail(String email) {
-        UserEntity userEntity = accountRepository.findById(email).get();
+        UserEntity userEntity = accountRepository.findByEmail(email);
         if ("".equals(userEntity.getEmail())) return true;
         return false;
     }
