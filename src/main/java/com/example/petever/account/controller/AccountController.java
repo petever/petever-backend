@@ -46,7 +46,7 @@ public class AccountController {
     }
 
     @PostMapping("/mail/auth")
-    public void authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        mailService.authenticationMailCode(email, code);
+    public EmailAuthEntity authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
+        return mailService.authenticationMailCode(email, code);
     }
 }

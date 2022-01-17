@@ -15,16 +15,11 @@ import java.time.LocalDateTime;
 @Table(name = "email_auth")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EmailAuthEntity {
+public class EmailAuthEntity extends BaseTimeEntity {
     @Id
     private String email;
     private String code;
     private boolean isUse;
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
     public void changeMailUse(boolean isUse) {
         this.isUse = isUse;

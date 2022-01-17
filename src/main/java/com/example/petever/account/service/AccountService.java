@@ -27,11 +27,10 @@ public class AccountService {
         if (!Email.isValid(userDto.getEmail())) return "이메일을 확인해주세요";
         if (!Password.isValid(userDto.getPassword())) return "비밀번호를 확인해주세요";
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";
+        emailAuthRepository.findFirstByEmailOrderByCreatedDateDesc(userDto.getEmail())
+                .filter(e -> e.isUse() == true)
+                .orElseThrow(() -> new IllegalArgumentException("인증받지 못한 이메일입니다."));
 
-        EmailAuthEntity emailAuthEntity = emailAuthRepository.findByEmailAndCode(userDto.getEmail(), userDto.getCode())
-                .filter(e -> e != null)
-                .orElseThrow(() -> new IllegalStateException("이메일 인증코드를 확인하세요"));
-        if (!Auth.isValid(userDto.getCode(), emailAuthEntity.getCode())) throw new IllegalStateException("이메일 인증코드가 맞지 않습니다.");
 
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         accountRepository.save(userEntity);

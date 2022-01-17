@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface EmailAuthRepository extends JpaRepository<EmailAuthEntity, Integer> {
     Optional<EmailAuthEntity> findByEmail(String email);
     Optional<EmailAuthEntity> findByEmailAndCode(String email, String code);
+    Optional<EmailAuthEntity> findFirstByEmailOrderByCreatedDateDesc(String email);
+
 }

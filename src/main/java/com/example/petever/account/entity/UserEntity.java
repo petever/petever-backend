@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class UserEntity extends BaseTimeEntity {
 
     @Id @GeneratedValue
     private Integer id;
@@ -25,10 +25,5 @@ public class UserEntity {
     private String password;
     private String name;
     private String code;
-
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
 }

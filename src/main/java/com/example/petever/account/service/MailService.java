@@ -51,10 +51,12 @@ public class MailService {
 
     }
 
-    public void authenticationMailCode(String email, String code) {
+    public EmailAuthEntity authenticationMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code)
                 .filter(e -> !"".equals(e.getEmail()))
                 .orElseThrow(() -> new NullPointerException("해당 이메일과 코드를 확인해주세요."));
         emailAuth.changeMailUse(true);
+        emailAuthRepository.save(emailAuth);
+        return emailAuth;
     }
 }
