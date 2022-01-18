@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class AccountController {
     }
 
     @PostMapping("/mail")
-    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) {
+    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) throws MessagingException {
         EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
         return ResponseEntity.ok().body(emailAuthEntity);
     }
