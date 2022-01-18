@@ -9,6 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -23,6 +25,7 @@ public class MailService {
     private final JavaMailSender javaMailSender;
     private final EmailAuthRepository emailAuthRepository;
     private final ModelMapper modelMapper;
+    private final TemplateEngine templateEngine;
 
     public EmailAuthEntity sendMailCode(String email) throws MessagingException {
         List<String> toUserList = new ArrayList<>();
@@ -34,18 +37,14 @@ public class MailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper simpleMailMessage = new MimeMessageHelper(mimeMessage, "utf-8");
 
-        // SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        Context context = new Context();
+        context.setVariable("code", authNo);
+        context.setVariable("email", email);
+        String process = templateEngine.process("sendMail.html", context);
 
         simpleMailMessage.setTo(toUserList.toArray(new String[toUserSize]));
         simpleMailMessage.setSubject("Petever 회원가입 인증 메일입니다");
-        simpleMailMessage.setText(
-                "<form action='http://15.164.222.232:8080/signup/mail/auth' method='POST'>" +
-                        "<input hidden type='email' name='email' value="+ email + ">" +
-                        "<input hidden type='text' name='code' value="+ authNo + ">" +
-                        "<button type='submit'>Send</button>" +
-                        "<javascript> </javascript>" +
-                        "<button type='submit'>Send</button>" +
-                        "</form>", true);
+        simpleMailMessage.setText(process, true);
 
         javaMailSender.send(mimeMessage);
 

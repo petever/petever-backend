@@ -23,32 +23,15 @@ import javax.mail.MessagingException;
 public class AccountController {
 
     private final AccountService accountService;
-    private final MailService mailService;
-    private final EmailAuthRepository emailAuthRepository;
 
     @PostMapping
     public String signUp(@RequestBody UserDto userDto) {
         return accountService.signIn(userDto);
     }
 
+    @ResponseBody
     @GetMapping("/mail/check")
     public Boolean checkMail(@RequestParam String email) {
         return accountService.checkMail(email);
-    }
-
-    @PostMapping("/mail")
-    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) throws MessagingException {
-        EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
-        return ResponseEntity.ok().body(emailAuthEntity);
-    }
-
-    @GetMapping("/mail/auth")
-    public Boolean checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        return mailService.checkMailCode(email, code);
-    }
-
-    @PostMapping("/mail/auth")
-    public EmailAuthEntity authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        return mailService.authenticationMailCode(email, code);
     }
 }
