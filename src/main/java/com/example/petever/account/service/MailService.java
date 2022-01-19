@@ -60,8 +60,15 @@ public class MailService {
 
         if (LocalDateTime.now().isBefore(emailAuth.getCreatedDate().plusMinutes(10))) emailAuth.changeMailUse(false);
         return emailAuth.isUse();
+    }
 
+    public Boolean checkAuthMail(String email) throws NullPointerException {
+        EmailAuthEntity emailAuth = emailAuthRepository.findFirstByEmailOrderByCreatedDateDesc(email)
+                .orElseThrow(() -> new IllegalArgumentException());
 
+        boolean isAuth = emailAuth.isUse();
+        if (isAuth) return true;
+        return false;
 
     }
 

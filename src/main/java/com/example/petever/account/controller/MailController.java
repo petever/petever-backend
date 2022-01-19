@@ -12,30 +12,36 @@ import javax.mail.MessagingException;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/signup")
+@RequestMapping("/mail")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MailController {
 
     private final MailService mailService;
     private final EmailAuthRepository emailAuthRepository;
 
-    @GetMapping("/mail/auth")
+    @GetMapping("/auth")
     public String checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
         EmailAuthEntity emailAuthEntity = mailService.authenticationMailCode(email, code);
-        System.out.println("emailAuthEntity = " + emailAuthEntity);
         return "mailAuth";
     }
 
     @ResponseBody
-    @PostMapping("/mail")
-    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) throws MessagingException {
-        EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
-        return ResponseEntity.ok().body(emailAuthEntity);
+    @PostMapping("/auth")
+    public EmailAuthEntity authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
+        return mailService.authenticationMailCode(email, code);
+    }
+
+    @GetMapping("/auth/check")
+    @ResponseBody
+    public ResponseEntity checkAuthMail(@RequestParam("email") String email) {
+        mailService.checkAuthMail(email);
+        return ResponseEntity.ok().body(true);
     }
 
     @ResponseBody
-    @PostMapping("/mail/auth")
-    public EmailAuthEntity authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        return mailService.authenticationMailCode(email, code);
+    @PostMapping
+    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) throws MessagingException {
+        EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
+        return ResponseEntity.ok().body(emailAuthEntity);
     }
 }

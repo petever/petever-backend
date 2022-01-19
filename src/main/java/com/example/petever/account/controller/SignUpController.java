@@ -20,7 +20,7 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 @RequestMapping("/signup")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class AccountController {
+public class SignUpController {
 
     private final AccountService accountService;
 
