@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NullPointerException.class)
     public ErrorResponse nullPointerException(NullPointerException e) {
@@ -17,8 +18,8 @@ public class ExceptionControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalStateException.class)
-    public ErrorResponse illegalStateException(IllegalStateException e) {
+    @ExceptionHandler(InvalidParameterException.class)
+    public ErrorResponse InvalidParameterException(InvalidParameterException e) {
         log.error("[exceptionHandler] " + e);
         return new ErrorResponse("IllegalStateException", e.getMessage());
     }

@@ -1,4 +1,4 @@
-package com.example.petever.account.domain;
+package com.example.petever.account.util;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

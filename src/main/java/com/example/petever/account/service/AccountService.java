@@ -1,11 +1,9 @@
 package com.example.petever.account.service;
 
-import com.example.petever.account.domain.Auth;
-import com.example.petever.account.domain.Email;
-import com.example.petever.account.domain.Nickname;
-import com.example.petever.account.domain.Password;
+import com.example.petever.account.util.Email;
+import com.example.petever.account.util.Nickname;
+import com.example.petever.account.util.Password;
 import com.example.petever.account.dto.UserDto;
-import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.entity.UserEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import com.example.petever.account.repository.UserRepository;

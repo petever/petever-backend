@@ -1,6 +1,6 @@
 package com.example.petever.account;
 
-import com.example.petever.account.domain.Password;
+import com.example.petever.account.util.Password;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
