@@ -12,7 +12,7 @@ class EmailTest {
 
     @Test
     @DisplayName("이메일은 빈값이나 널이 들어오면 안된다")
-    void case1() {
+    void 이메일은_빈값이나_널이_들어오면_안된다() {
         String email = "";
         boolean result = Email.isEmpty(email);
         assertThat(result).isTrue();
@@ -20,18 +20,9 @@ class EmailTest {
 
     @Test
     @DisplayName("이메일 형식에 맞지 않는 값은 들어오면 안된다.")
-    void case2() {
+    void 이메일_형식에_맞지_않는_값은_들어오면_안된다() {
         String email = "rumor1993@flow.team";
         boolean result = Email.isValid(email);
         assertThat(result).isTrue();
-    }
-
-    // 이메일 인증은 목 작업을 해야하는데 운영 테스트는 성공
-
-
-    @Test
-    @DisplayName("이메일 인증번호가 맞는지 확인한다.")
-    void case3() {
-
     }
 }

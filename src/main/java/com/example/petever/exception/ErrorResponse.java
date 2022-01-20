@@ -1,4 +1,4 @@
-package com.example.petever.account.exception;
+package com.example.petever.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

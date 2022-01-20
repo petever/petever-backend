@@ -5,7 +5,6 @@ import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -65,10 +64,7 @@ public class MailService {
     public Boolean checkAuthMail(String email) throws NullPointerException {
         EmailAuthEntity emailAuth = emailAuthRepository.findFirstByEmailOrderByCreatedDateDesc(email)
                 .orElseThrow(() -> new IllegalArgumentException());
-
-        boolean isAuth = emailAuth.isUse();
-        if (isAuth) return true;
-        return false;
+        return emailAuth.isUse();
 
     }
 

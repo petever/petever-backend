@@ -17,7 +17,6 @@ import javax.mail.MessagingException;
 public class MailController {
 
     private final MailService mailService;
-    private final EmailAuthRepository emailAuthRepository;
 
     @GetMapping("/auth")
     public String checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
@@ -33,7 +32,7 @@ public class MailController {
 
     @GetMapping("/auth/check")
     @ResponseBody
-    public ResponseEntity checkAuthMail(@RequestParam("email") String email) {
+    public ResponseEntity<Boolean> checkAuthMail(@RequestParam("email") String email) {
         mailService.checkAuthMail(email);
         return ResponseEntity.ok().body(true);
     }
