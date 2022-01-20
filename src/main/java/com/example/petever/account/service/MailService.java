@@ -26,7 +26,7 @@ public class MailService {
     private final ModelMapper modelMapper;
     private final TemplateEngine templateEngine;
 
-    public EmailAuthEntity sendMailCode(String email) throws MessagingException {
+    public MailAuthDto sendMailCode(String email) throws MessagingException {
         List<String> toUserList = new ArrayList<>();
         toUserList.add(email);
 
@@ -49,7 +49,8 @@ public class MailService {
 
         MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), false);
         EmailAuthEntity emailAuthEntity = modelMapper.map(mailAuthDto, EmailAuthEntity.class);
-        return emailAuthRepository.save(emailAuthEntity);
+        emailAuthRepository.save(emailAuthEntity);
+        return modelMapper.map(emailAuthEntity, MailAuthDto.class);
     }
 
     public Boolean checkMailCode(String email, String code) throws NullPointerException {
@@ -68,12 +69,12 @@ public class MailService {
 
     }
 
-    public EmailAuthEntity authenticationMailCode(String email, String code) {
+    public MailAuthDto authenticationMailCode(String email, String code) {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code)
                 .filter(e -> !"".equals(e.getEmail()))
                 .orElseThrow(() -> new NullPointerException("해당 이메일과 코드를 확인해주세요."));
         emailAuth.changeMailUse(true);
         emailAuthRepository.save(emailAuth);
-        return emailAuth;
+        return modelMapper.map(emailAuth, MailAuthDto.class);
     }
 }

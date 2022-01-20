@@ -1,5 +1,6 @@
 package com.example.petever.account.controller;
 
+import com.example.petever.account.dto.MailAuthDto;
 import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import com.example.petever.account.service.MailService;
@@ -20,13 +21,13 @@ public class MailController {
 
     @GetMapping("/auth")
     public String checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        EmailAuthEntity emailAuthEntity = mailService.authenticationMailCode(email, code);
+        mailService.authenticationMailCode(email, code);
         return "mailAuth";
     }
 
     @ResponseBody
     @PostMapping("/auth")
-    public EmailAuthEntity authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
+    public MailAuthDto authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
         return mailService.authenticationMailCode(email, code);
     }
 
@@ -39,8 +40,8 @@ public class MailController {
 
     @ResponseBody
     @PostMapping
-    public ResponseEntity<EmailAuthEntity> sendMailCode(@RequestParam String email) throws MessagingException {
-        EmailAuthEntity emailAuthEntity = mailService.sendMailCode(email);
+    public ResponseEntity<MailAuthDto> sendMailCode(@RequestParam String email) throws MessagingException {
+        MailAuthDto emailAuthEntity = mailService.sendMailCode(email);
         return ResponseEntity.ok().body(emailAuthEntity);
     }
 }

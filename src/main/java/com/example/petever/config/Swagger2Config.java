@@ -1,4 +1,4 @@
-package com.example.petever;
+package com.example.petever.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

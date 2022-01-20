@@ -1,6 +1,6 @@
 package com.example.petever.account;
 
-import com.example.petever.account.util.Email;
+import com.example.petever.util.Email;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

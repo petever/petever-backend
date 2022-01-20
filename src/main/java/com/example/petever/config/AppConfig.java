@@ -1,4 +1,4 @@
-package com.example.petever;
+package com.example.petever.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
