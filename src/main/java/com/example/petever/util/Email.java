@@ -1,8 +1,4 @@
-package com.example.petever.account.domain;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+package com.example.petever.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package com.example.petever.account.domain;
+package com.example.petever.util;
 
 public class Auth {
 

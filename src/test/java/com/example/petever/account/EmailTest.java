@@ -1,10 +1,8 @@
 package com.example.petever.account;
 
-import com.example.petever.account.domain.Email;
-import com.example.petever.account.service.MailService;
+import com.example.petever.util.Email;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
