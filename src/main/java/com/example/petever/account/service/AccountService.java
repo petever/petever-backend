@@ -22,16 +22,18 @@ public class AccountService {
     private final ModelMapper modelMapper;
 
     public String signIn(UserDto userDto) {
+        UserEntity userEntity = accountRepository.findByEmail(userDto.getEmail()).get();
+        if (userDto.getEmail().equals(userEntity.getEmail())) return "이미 존재하는 메일입니다.";
+
         if (!Email.isValid(userDto.getEmail())) return "이메일을 확인해주세요";
         if (!Password.isValid(userDto.getPassword())) return "비밀번호를 확인해주세요";
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";
+
         emailAuthRepository.findFirstByEmailOrderByCreatedDateDesc(userDto.getEmail())
                 .filter(e -> e.isUse() == true)
                 .orElseThrow(() -> new InvalidParameterException("인증받지 못한 이메일입니다.", HttpStatus.BAD_REQUEST.value()));
 
-
-        UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
-        accountRepository.save(userEntity);
+        accountRepository.save(modelMapper.map(userDto, UserEntity.class));
         return "OK";
     }
 
