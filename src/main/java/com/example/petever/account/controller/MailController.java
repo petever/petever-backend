@@ -7,6 +7,7 @@ import com.example.petever.account.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -20,14 +21,14 @@ public class MailController {
     private final MailService mailService;
 
     @GetMapping("/auth")
-    public String checkMailCode(@RequestParam("email") String email, @RequestParam String code) {
-        mailService.authenticationMailCode(email, code);
+    public String checkMailCode(@RequestParam("email") String email, @RequestParam String code, Model model) {
+        model.addAttribute("authMessage", mailService.authenticationMailCode(email, code));
         return "mailAuth";
     }
 
     @ResponseBody
     @PostMapping("/auth")
-    public MailAuthDto authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
+    public String authenticationMailCode(@RequestParam("email") String email, @RequestParam String code) {
         return mailService.authenticationMailCode(email, code);
     }
 
