@@ -4,10 +4,12 @@ import com.example.petever.account.dto.MailAuthDto;
 import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import lombok.RequiredArgsConstructor;
+import org.codehaus.groovy.util.StringUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -60,7 +62,8 @@ public class MailService {
         System.out.println("emailAuth = " + emailAuth);
 
         if (emailAuth == null) return "인증이 만료되었습니다.";
-        if (LocalDateTime.now().isBefore(emailAuth.getCreatedDate().plusMinutes(10))) emailAuth.changeMailUse(false);
+        LocalDateTime createDate = "".equals(emailAuth.getCreatedDate()) ? emailAuth.getModifiedDate() : emailAuth.getCreatedDate();
+        if (LocalDateTime.now().isBefore(createDate.plusMinutes(10))) emailAuth.changeMailUse(false);
         emailAuth.changeMailUse(true);
         emailAuthRepository.save(emailAuth);
         return emailAuth.isUse() ? "인증이 완료되었습니다." : "인증이 만료되었습니다.";

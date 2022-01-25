@@ -2,9 +2,11 @@ package com.example.petever.config;
 
 import com.example.petever.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@EnableJpaAuditing
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
