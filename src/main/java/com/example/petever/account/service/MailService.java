@@ -59,8 +59,6 @@ public class MailService {
                 .filter(e -> !"".equals(e.getEmail()))
                 .orElse(null);
 
-        System.out.println("emailAuth = " + emailAuth);
-
         if (emailAuth == null) return "인증이 만료되었습니다.";
         LocalDateTime createDate = "".equals(emailAuth.getCreatedDate()) ? emailAuth.getModifiedDate() : emailAuth.getCreatedDate();
         if (LocalDateTime.now().isBefore(createDate.plusMinutes(10))) emailAuth.changeMailUse(false);
