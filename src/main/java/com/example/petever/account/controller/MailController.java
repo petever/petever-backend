@@ -35,7 +35,8 @@ public class MailController {
     @GetMapping("/auth/check")
     @ResponseBody
     public ResponseEntity<Boolean> checkAuthMail(@RequestParam("email") String email) {
-        return ResponseEntity.ok().body(mailService.checkAuthMail(email));
+        boolean isUse = mailService.checkAuthMail(email);
+        return ResponseEntity.ok().body(isUse);
     }
 
     @ResponseBody
