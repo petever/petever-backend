@@ -16,15 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-
     private final UserRepository accountRepository;
     private final EmailAuthRepository emailAuthRepository;
     private final ModelMapper modelMapper;
 
     public String signIn(UserDto userDto) {
-        UserEntity userEntity = accountRepository.findByEmail(userDto.getEmail()).get();
-        if (userDto.getEmail().equals(userEntity.getEmail())) return "이미 존재하는 메일입니다.";
-
         if (!Email.isValid(userDto.getEmail())) return "이메일을 확인해주세요";
         if (!Password.isValid(userDto.getPassword())) return "비밀번호를 확인해주세요";
         if (!Nickname.isValid(userDto.getName())) return "이메일을 확인해주세요";

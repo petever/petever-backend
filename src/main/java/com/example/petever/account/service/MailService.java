@@ -4,10 +4,12 @@ import com.example.petever.account.dto.MailAuthDto;
 import com.example.petever.account.entity.EmailAuthEntity;
 import com.example.petever.account.repository.EmailAuthRepository;
 import lombok.RequiredArgsConstructor;
+import org.codehaus.groovy.util.StringUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -44,7 +46,6 @@ public class MailService {
         simpleMailMessage.setTo(toUserList.toArray(new String[toUserSize]));
         simpleMailMessage.setSubject("Petever 회원가입 인증 메일입니다");
         simpleMailMessage.setText(process, true);
-
         javaMailSender.send(mimeMessage);
 
         MailAuthDto mailAuthDto = new MailAuthDto(email, String.valueOf(authNo), false);
@@ -53,13 +54,19 @@ public class MailService {
         return modelMapper.map(emailAuthEntity, MailAuthDto.class);
     }
 
-    public Boolean checkMailCode(String email, String code) throws NullPointerException {
+    public String authenticationMailCode(String email, String code) throws NullPointerException {
         EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code)
                 .filter(e -> !"".equals(e.getEmail()))
-                .orElseThrow(() -> new NullPointerException("해당 메일과 코드가 인증되지 않았습니다."));
+                .orElse(null);
 
-        if (LocalDateTime.now().isBefore(emailAuth.getCreatedDate().plusMinutes(10))) emailAuth.changeMailUse(false);
-        return emailAuth.isUse();
+        if (emailAuth == null) return "인증이 만료되었습니다.";
+
+
+        LocalDateTime createDate = emailAuth.getCreatedDate() == null || "".equals(emailAuth.getCreatedDate()) ? emailAuth.getModifiedDate() : emailAuth.getCreatedDate();
+        if (LocalDateTime.now().isBefore(createDate.plusMinutes(10))) emailAuth.changeMailUse(false);
+        emailAuth.changeMailUse(true);
+        emailAuthRepository.save(emailAuth);
+        return emailAuth.isUse() ? "인증이 완료되었습니다." : "인증이 만료되었습니다.";
     }
 
     public Boolean checkAuthMail(String email) throws NullPointerException {
@@ -67,14 +74,5 @@ public class MailService {
                 .orElseThrow(() -> new IllegalArgumentException());
         return emailAuth.isUse();
 
-    }
-
-    public MailAuthDto authenticationMailCode(String email, String code) {
-        EmailAuthEntity emailAuth = emailAuthRepository.findByEmailAndCode(email, code)
-                .filter(e -> !"".equals(e.getEmail()))
-                .orElseThrow(() -> new NullPointerException("해당 이메일과 코드를 확인해주세요."));
-        emailAuth.changeMailUse(true);
-        emailAuthRepository.save(emailAuth);
-        return modelMapper.map(emailAuth, MailAuthDto.class);
     }
 }
