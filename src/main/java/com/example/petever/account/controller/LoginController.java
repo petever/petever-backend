@@ -24,6 +24,7 @@ public class LoginController {
         LoginDto loginUser = loginService.login(loginDto);
         HttpSession session = request.getSession();
         session.setAttribute("users", loginUser);
+        session.setAttribute("SameSite", "petever.pet");
         return loginUser;
     }
 
