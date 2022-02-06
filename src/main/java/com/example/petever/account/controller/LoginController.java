@@ -24,7 +24,6 @@ public class LoginController {
         LoginDto loginUser = loginService.login(loginDto);
         HttpSession session = request.getSession();
         session.setAttribute("users", loginUser);
-        sessionManager.createSession(loginDto, response);
         return loginUser;
     }
 
@@ -32,8 +31,6 @@ public class LoginController {
     public String logout(@RequestBody UserDto userDto, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) session.invalidate();
-
-        sessionManager.expire(request);
         return "로그아웃";
     }
 }
