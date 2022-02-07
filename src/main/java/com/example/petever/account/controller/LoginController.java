@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://petever.pet", allowedHeaders = "*", allowCredentials = "true")
 public class LoginController {
     private final LoginService loginService;
     private final SessionManager sessionManager;
