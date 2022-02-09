@@ -2,6 +2,7 @@ package com.example.petever.account.service;
 
 import com.example.petever.account.dto.category.CategoryAddDto;
 import com.example.petever.account.dto.category.CategoryEditDto;
+import com.example.petever.account.dto.category.CategoryOrderDto;
 import com.example.petever.account.entity.CategoryEntity;
 import com.example.petever.account.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,17 @@ public class CategoryService {
 
     public void editCategory(CategoryEditDto categoryEditDto) {
         CategoryEntity categoryEntity = categoryRepository.findById(categoryEditDto.getId()).get();
+        categoryEntity.changeCategoryName(categoryEditDto.getName());
 
     }
 
     public void deleteCategory() {
+
     }
 
-    public void changeCategoryOrder() {
+    public void changeCategoryOrder(CategoryOrderDto categoryOrderDto) {
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryOrderDto.getId()).get();
+        categoryEntity.changeCategoryOrder(categoryOrderDto);
     }
 
 }

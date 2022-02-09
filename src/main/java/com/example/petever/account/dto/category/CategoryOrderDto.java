@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryEditDto {
+public class CategoryOrderDto {
     private Integer id;
-    private String name;
+    private Integer parent_id;
+    private Integer order;
 }
