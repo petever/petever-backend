@@ -1,6 +1,7 @@
 package com.example.petever.account.entity;
 
 
+import com.example.petever.account.dto.category.CategoryEditDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,9 @@ public class CategoryEntity extends BaseTimeEntity {
     private String name;
     private Integer parent_id;
     private Integer category_order;
+
+
+    public void changeCategoryName(String name) {
+        this.name = name;
+    }
 }

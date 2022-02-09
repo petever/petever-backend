@@ -1,6 +1,7 @@
 package com.example.petever.account.controller;
 
 import com.example.petever.account.dto.category.CategoryAddDto;
+import com.example.petever.account.dto.category.CategoryEditDto;
 import com.example.petever.account.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,12 @@ public class CategoryController {
 
     @PostMapping
     public void addCategory(@RequestBody CategoryAddDto categoryAddDto) {
-        System.out.println("categoryAddDto = " + categoryAddDto);
         categoryService.addCategory(categoryAddDto);
     }
 
     @PatchMapping
-    public void editCategory() {
-        categoryService.editCategory();
+    public void editCategory(@RequestBody CategoryEditDto categoryEditDto) {
+        categoryService.editCategory(categoryEditDto);
     }
 
     @DeleteMapping
