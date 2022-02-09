@@ -16,9 +16,9 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CategoryEntity extends BaseTimeEntity {
     @Id @GeneratedValue
-    private long id;
+    private Integer id;
     private String registrant;
     private String name;
-    private long parent_id;
-    private int order;
+    private Integer parent_id;
+    private Integer category_order;
 }

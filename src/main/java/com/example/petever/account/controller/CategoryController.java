@@ -18,6 +18,7 @@ public class CategoryController {
 
     @PostMapping
     public void addCategory(@RequestBody CategoryAddDto categoryAddDto) {
+        System.out.println("categoryAddDto = " + categoryAddDto);
         categoryService.addCategory(categoryAddDto);
     }
 

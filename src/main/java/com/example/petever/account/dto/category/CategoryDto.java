@@ -10,9 +10,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
-    private long id;
+    private Integer id;
     private String registrant;
     private String name;
-    private long parent_id;
-    private int order;
+    private Integer parent_id;
+    private Integer order;
 }
