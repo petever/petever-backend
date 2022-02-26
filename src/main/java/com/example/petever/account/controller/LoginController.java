@@ -30,6 +30,7 @@ public class LoginController {
     public String logout(@RequestBody UserDto userDto, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) session.invalidate();
+        // TODO: 객체반환 필요
         return "로그아웃";
     }
 }
