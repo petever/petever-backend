@@ -15,7 +15,6 @@ import javax.mail.MessagingException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mail")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MailController {
 
     private final MailService mailService;
